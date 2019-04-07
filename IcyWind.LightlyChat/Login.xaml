@@ -1,0 +1,21 @@
+﻿<Page x:Class="IcyWind.LightlyChat.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IcyWind.LightlyChat"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Login">
+
+    <Grid Background="WhiteSmoke">
+        <Label Content="Username" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="user"  HorizontalAlignment="Center" Margin="10,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="780"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="pass" HorizontalAlignment="Center" Margin="10,95,10,0" VerticalAlignment="Top" Width="780"/>
+        <Label Content="Region" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="Region" HorizontalAlignment="Center" Margin="10,149,10,0" VerticalAlignment="Top" Width="780" Height="26"/>
+        <Button Content="Login&#xD;&#xA;" HorizontalAlignment="Center" Margin="10,180,10,0" VerticalAlignment="Top" Width="780" Height="260" Click="Button_Click"/>
+
+    </Grid>
+</Page>
