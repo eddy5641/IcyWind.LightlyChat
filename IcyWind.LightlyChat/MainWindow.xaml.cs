@@ -36,6 +36,7 @@ namespace IcyWind.LightlyChat
 
         public static void UpdateView(Page page)
         {
+            //Fucking lazest code NA
             MainWin.MainContent.Content = page.Content;
         }
 

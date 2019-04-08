@@ -25,22 +25,19 @@ namespace IcyWind.Chat.Jid
 
         public static bool operator== (UserJid orgJid, UserJid compJid)
         {
-            return orgJid != null && (compJid != null && orgJid.PlayerJid == compJid.PlayerJid);
+            return string.Equals(orgJid.PlayerJid, compJid.PlayerJid);
         }
 
         public static bool operator!= (UserJid orgJid, UserJid compJid)
         {
-            return compJid != null && (orgJid != null && orgJid.PlayerJid != compJid.PlayerJid);
+            return !string.Equals(orgJid.PlayerJid, compJid.PlayerJid);
         }
 
         public override bool Equals(object obj)
         {
             if (obj is UserJid compJid)
             {
-                if (this == compJid)
-                {
-                    return true;
-                }
+                return PlayerJid.Equals(compJid.PlayerJid);
             }
             return false;
         }

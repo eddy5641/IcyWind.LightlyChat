@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -107,19 +108,27 @@ namespace IcyWind.Chat
         public ChatClient(IPEndPoint endPoint)
         {
             TcpClient = new TcpStringClient(endPoint, true);
+
+            PresenceManager = new PresenceManager(this);
+            IqManager = new IqHandler(this);
+            MessageManager = new MessageManager(this);
+            AuthHandler = new AuthHandler(this);
         }
 
         public ChatClient(IPEndPoint endPoint, bool ssl)
         {
             TcpClient = new TcpStringClient(endPoint, ssl);
+
+            PresenceManager = new PresenceManager(this);
+            IqManager = new IqHandler(this);
+            MessageManager = new MessageManager(this);
+            AuthHandler = new AuthHandler(this);
         }
 
         [Obsolete("This method does not support SSL. Consider using ConnectSSL")]
         public async Task Connect(string host, AuthCred cred)
         {
-            PresenceManager = new PresenceManager(this);
-            IqManager = new IqHandler(this);
-            MessageManager = new MessageManager(this);
+            TcpClient.OnStringReceived += ReadXMPPMessage;
 
             await TcpClient.Connect(host);
             Host = host;
@@ -130,9 +139,7 @@ namespace IcyWind.Chat
 
         public async Task ConnectSSL(string host, AuthCred cred)
         {
-            PresenceManager = new PresenceManager(this);
-            IqManager = new IqHandler(this);
-            MessageManager = new MessageManager(this);
+            TcpClient.OnStringReceived += ReadXMPPMessage;
 
             await TcpClient.ConnectSSL(host);
             Host = host;
@@ -162,6 +169,8 @@ namespace IcyWind.Chat
         /// <param name="x">The received string</param>
         private bool ReadXMPPMessage(string x)
         {
+            //<failure xmlns='urn:ietf:params:xml:ns:xmpp-sasl'><incorrect-input/></failure>
+
             if (x.Contains("</stream:stream>"))
             {
                 //TODO: Handle a disconnect
@@ -276,6 +285,7 @@ namespace IcyWind.Chat
             }
             catch
             {
+                Debugger.Break();
                 return false;
             }
         }

@@ -24,6 +24,7 @@ namespace IcyWind.Chat.Messages
         {
             ChatClient = client;
         }
+
         public bool HandleMessage(XmlElement el)
         {
             try
@@ -33,7 +34,7 @@ namespace IcyWind.Chat.Messages
                 if (!string.IsNullOrWhiteSpace(fromUserString) && !string.IsNullOrWhiteSpace(toUserString))
                 {
                     var fromJid = new UserJid(fromUserString);
-                    var toJid = new UserJid(fromUserString);
+                    var toJid = new UserJid(toUserString);
                     //el.InnerText is the message
 
                     if (toJid == ChatClient.MainJid)
