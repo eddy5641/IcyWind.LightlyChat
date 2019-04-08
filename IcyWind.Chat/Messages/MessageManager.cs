@@ -30,7 +30,7 @@ namespace IcyWind.Chat.Messages
             try
             {
                 var fromUserString = el.Attributes["from"].Value;
-                var toUserString = el.Attributes["from"].Value;
+                var toUserString = el.Attributes["to"].Value;
                 if (!string.IsNullOrWhiteSpace(fromUserString) && !string.IsNullOrWhiteSpace(toUserString))
                 {
                     var fromJid = new UserJid(fromUserString);

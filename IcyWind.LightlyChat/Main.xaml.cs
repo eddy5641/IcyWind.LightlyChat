@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IcyWind.LightlyChat
 {
@@ -27,7 +28,7 @@ namespace IcyWind.LightlyChat
         {
             InitializeComponent();
 
-            chat.ConnectSSL("pvp.net", cred);
+            _ = chat.ConnectSSL("pvp.net", cred);
             chat.PresenceManager.OnPlayerPresenceRecieved += PresenceManager_OnPlayerPresenceRecieved;
             chat.IqManager.OnRosterItemRecieved += IqManager_OnRosterItemRecieved;
             chat.MessageManager.OnMessage += MessageManager_OnMessage;
@@ -36,23 +37,35 @@ namespace IcyWind.LightlyChat
 
         private void IqManager_OnRosterItemRecieved(IcyWind.Chat.Jid.UserJid jid)
         {
-            if (string.IsNullOrWhiteSpace(jid.SumName))
-                fakeFriends.Items.Add(jid.RawJid);
-            else
-                fakeFriends.Items.Add(jid.SumName);
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                if (string.IsNullOrWhiteSpace(jid.SumName))
+                    fakeFriends.Items.Add(jid.RawJid);
+                else
+                    fakeFriends.Items.Add(jid.SumName);
+            }));
         }
 
         private void MessageManager_OnMessage(IcyWind.Chat.Jid.UserJid toJid, IcyWind.Chat.Jid.UserJid fromJid, string msg)
         {
-            MessageBox.Show(msg, fromJid.SumName);
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                MessageBox.Show(msg, fromJid.PlayerJid);
+            }));
         }
 
         private void PresenceManager_OnPlayerPresenceRecieved(IcyWind.Chat.Presence.ChatPresence pres)
         {
-            if (string.IsNullOrWhiteSpace(pres.FromJid.SumName))
-                fakeFriends.Items.Add(pres.FromJid.RawJid);
-            else
-                fakeFriends.Items.Add(pres.FromJid.SumName);
+            return;
+#pragma warning disable CS0162 // Unreachable code detected
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+#pragma warning restore CS0162 // Unreachable code detected
+            {
+                if (string.IsNullOrWhiteSpace(pres.FromJid.SumName))
+                    fakeFriends.Items.Add(pres.FromJid.RawJid);
+                else
+                    fakeFriends.Items.Add(pres.FromJid.SumName);
+            }));
         }
     }
 }

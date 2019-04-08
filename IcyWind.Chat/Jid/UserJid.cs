@@ -25,7 +25,7 @@ namespace IcyWind.Chat.Jid
 
         public static bool operator== (UserJid orgJid, UserJid compJid)
         {
-            return string.Equals(orgJid.PlayerJid, compJid.PlayerJid);
+            return string.Equals(orgJid.PlayerJid.ToLower(), compJid.PlayerJid.ToLower());
         }
 
         public static bool operator!= (UserJid orgJid, UserJid compJid)

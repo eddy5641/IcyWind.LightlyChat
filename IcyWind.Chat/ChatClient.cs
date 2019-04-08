@@ -22,6 +22,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Xml;
 using IcyWind.Chat.Auth;
 using IcyWind.Chat.Iq;
@@ -283,9 +284,9 @@ namespace IcyWind.Chat
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                Debugger.Break();
+                Debugger.Log(0, "", new JavaScriptSerializer().Serialize(ex));
                 return false;
             }
         }
