@@ -136,6 +136,7 @@ namespace IcyWind.Chat
             TcpClient.SendString(
                 $"<stream:stream to=\"{host}\" xml:lang=\"*\" version=\"1.0\" xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:client\">");
             AuthCred = cred;
+            IqManager.DoChatPing();
         }
 
         public async Task ConnectSSL(string host, AuthCred cred)
@@ -147,6 +148,7 @@ namespace IcyWind.Chat
             TcpClient.SendString(
                 $"<stream:stream to=\"{host}\" xml:lang=\"*\" version=\"1.0\" xmlns:stream=\"http://etherx.jabber.org/streams\" xmlns=\"jabber:client\">");
             AuthCred = cred;
+            IqManager.DoChatPing();
         }
 
         public bool AddSASLAuth(BaseAuth authMethod)

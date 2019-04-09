@@ -1,5 +1,6 @@
 ﻿using IcyWind.Chat;
 using IcyWind.Chat.Auth;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,6 +44,7 @@ namespace IcyWind.LightlyChat
                     fakeFriends.Items.Add(jid.RawJid);
                 else
                     fakeFriends.Items.Add(jid.SumName);
+
             }));
         }
 
@@ -56,6 +58,7 @@ namespace IcyWind.LightlyChat
 
         private void PresenceManager_OnPlayerPresenceRecieved(IcyWind.Chat.Presence.ChatPresence pres)
         {
+            Debugger.Log(0, "", JsonConvert.SerializeObject(pres) + Environment.NewLine);
             return;
 #pragma warning disable CS0162 // Unreachable code detected
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>

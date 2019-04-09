@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Xml;
 using IcyWind.Chat.Jid;
 
@@ -135,7 +136,21 @@ namespace IcyWind.Chat.Iq
             return true;
 
             #endregion RosterIQ
+        }
 
+
+        internal void DoChatPing()
+        {
+            var t = new Timer();
+            t.Elapsed += T_Elapsed;
+            t.Interval = 120000;
+            t.Start();
+        }
+
+        private void T_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            ChatClient.TcpClient.SendString(
+                ChatClient.PresenceManager.PresenceAsString(ChatClient.PresenceManager.Presence));
         }
     }
 }
